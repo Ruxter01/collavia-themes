@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Following Up with DEAL: Briefing</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    /* Collavia header */
+    .page-header {
+      background: linear-gradient(135deg, #4a72a0 0%, #5b83b1 50%, #6b93c0 100%);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+    }
+    .page-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .hamburger {
+      color: #ffffff;
+      font-size: 18px;
+      opacity: 0.85;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .page-title {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .page-title span {
+      opacity: 0.75;
+      font-weight: 400;
+    }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .header-btn {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Briefing theme styles */
+    body.t-briefing{font-family:Arial,sans-serif;background:#fff;color:#2D3142;min-height:100vh}
+    .t-wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+    .t-hero{background:#fff;border-radius:14px;border:1px solid #C8D9F0;padding:16px 20px 16px 0;margin-bottom:16px;position:relative;overflow:hidden}
+    .t-hero::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#5496E9,#9CC0ED)}
+    .t-hero h1{font-size:20px;font-weight:800;color:#2D3142;margin-bottom:4px;padding-left:16px}
+    .t-sub{font-size:13px;color:#637080;line-height:1.4;padding-left:16px;max-width:680px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .t-metrics{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-left:16px}
+    .t-metric{background:#EEF3FB;border:1px solid #C8D9F0;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:800;color:#5496E9}
+    .t-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:1px solid #C8D9F0;margin-bottom:16px;gap:0;background:transparent}.t-tabs::-webkit-scrollbar{display:none}
+    .t-tab{padding:7px 16px;border:none;background:transparent;color:#637080;font-size:12px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all .15s;flex-shrink:0}
+    .t-tab:hover{color:#2D3142}.t-tab.active{color:#5496E9;border-bottom-color:#5496E9;background:transparent}
+    .t-panel{display:none;background:#fff;border-radius:14px;padding:26px;border:1px solid #C8D9F0;box-shadow:0 4px 18px rgba(45,49,66,.06)}
+    .t-panel.active{display:block}
+    .t-sec-title{font-size:20px;font-weight:800;color:#2D3142;margin-bottom:12px}
+    .t-sec-body{font-size:14px;line-height:1.6;color:#3a4a5e;margin-bottom:16px}
+    .t-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+    .t-card{background:#EEF3FB;border:1px solid #C8D9F0;border-radius:12px;padding:16px}
+    .t-card h3{font-size:14px;font-weight:800;color:#2D3142;margin-bottom:6px}
+    .t-card p{font-size:13px;line-height:1.55;color:#3a4a5e}
+    .t-steps{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .t-step{display:flex;gap:14px;align-items:flex-start;padding:14px;background:#EEF3FB;border-radius:10px;border:1px solid #C8D9F0}
+    .t-step-num{width:28px;height:28px;border-radius:50%;background:#5496E9;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .t-step-body strong{font-size:14px;color:#2D3142;display:block;margin-bottom:4px}
+    .t-step-body p{font-size:13px;line-height:1.5;color:#3a4a5e}
+    .t-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .t-stat{background:#EEF3FB;border:1px solid #C8D9F0;border-radius:10px;padding:14px 18px;min-width:120px;text-align:center}
+    .t-stat-val{font-size:24px;font-weight:800;color:#5496E9;line-height:1}
+    .t-stat-lbl{font-size:11px;color:#637080;margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+    .t-quote{border-left:3px solid #9CC0ED;padding:12px 16px;margin:12px 0;background:#EEF3FB;border-radius:0 10px 10px 0}
+    .t-quote p{font-size:14px;line-height:1.6;color:#2D3142;font-style:italic}
+    .t-quote cite{font-size:12px;color:#637080;font-style:normal;font-weight:700;display:block;margin-top:6px}
+    .t-longtext{max-height:560px;overflow:auto;margin-top:12px}
+    .t-ls{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid #C8D9F0}
+    .t-ls h2{font-size:14px;font-weight:800;background:#DAFF7D;display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:8px;color:#2D3142}
+    .t-ls p{font-size:13px;line-height:1.6;color:#3a4a5e}
+    .t-media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:12px}
+    .t-media-item{border-radius:10px;overflow:hidden;border:1px solid #C8D9F0;background:#EEF3FB}
+    .t-media-item iframe,.t-media-item video{width:100%;display:block;border:none;min-height:200px}
+    .t-panel p,.t-panel li{font-size:14px;line-height:1.6;color:#3a4a5e}
+    .t-panel ul,.t-panel ol{padding-left:20px;margin:8px 0}
+    .t-panel a{color:#5496E9}
+    .t-ls-heading{font-size:13px;font-weight:800;margin-bottom:10px;display:inline-block;padding:3px 10px;border-radius:6px}
+    .t-ls-body p{font-size:13px;line-height:1.7;margin-bottom:10px}
+    .t-ls-body h3,.t-ls-body h4{font-size:13px;font-weight:800;margin:14px 0 5px;color:#2D3142}
+    .t-ls-body ul,.t-ls-body ol{padding-left:20px;margin-bottom:10px}
+    .t-ls-body li{font-size:13px;line-height:1.65;margin-bottom:4px}
+    .t-ls-body a{color:#5496E9;text-decoration:none}
+    .t-ls-body a:hover{text-decoration:underline}
+    .t-ls-body strong,.t-ls-body b{font-weight:800}
+    .t-ls-body blockquote{border-left:3px solid #9CC0ED;padding:8px 14px;margin:10px 0;font-style:italic}
+    .t-ls-empty{font-size:13px;color:#888}
+    .t-raw-content{margin-top:12px}
+    .t-raw-content p{font-size:14px;line-height:1.65;color:#3a4a5e;margin-bottom:10px}
+    .t-raw-content ul,.t-raw-content ol{padding-left:20px;margin-bottom:10px}
+    .t-raw-content li{font-size:14px;line-height:1.65;color:#3a4a5e;margin-bottom:4px}
+    .t-raw-content h3,.t-raw-content h4{font-size:14px;font-weight:800;color:#2D3142;margin:14px 0 6px}
+    .t-raw-content a{color:#5496E9;text-decoration:none}
+    .t-raw-content a:hover{text-decoration:underline}
+    .t-raw-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+    .t-raw-content th{background:#EEF3FB;padding:9px 12px;text-align:left;font-weight:800;border:1px solid #C8D9F0;color:#2D3142}
+    .t-raw-content td{padding:9px 12px;border:1px solid #C8D9F0;color:#3a4a5e;vertical-align:top}
+    .t-raw-content tr:nth-child(even) td{background:#F8FAFF}
+    .t-raw-content strong,.t-raw-content b{font-weight:800}
+    .t-raw-content blockquote{border-left:3px solid #9CC0ED;padding:8px 14px;margin:10px 0;font-style:italic}
+    @media(max-width:680px){.t-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="t-briefing">
+
+  <header class="page-header">
+    <div class="page-header-left">
+      <span class="hamburger">&#9776;</span>
+      <span class="page-title">Following Up with DEAL: <span>Briefing</span></span>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn">Edit This Page</button>
+      <button class="header-btn">New Page</button>
+    </div>
+  </header>
+
+  <div class="t-wrap">
+    <div class="t-hero">
+      <div class="t-hero-inner">
+        <h1>Understanding the DEAL Document</h1>
+        <p class="t-sub">This page outlines the philosophy, mechanics, and usage of the DEAL document to enhance the sales process.</p>
+      </div>
+    </div>
+    <div class="t-tabs">
+      <button class="t-tab active" onclick="sw(0)">Philosophy</button>
+      <button class="t-tab" onclick="sw(1)">DEAL Components</button>
+      <button class="t-tab" onclick="sw(2)">Usage</button>
+      <button class="t-tab" onclick="sw(3)">Mechanics</button>
+      <button class="t-tab" onclick="sw(4)">Driving Momentum</button>
+      <button class="t-tab" onclick="sw(5)">Evaluation</button>
+      <button class="t-tab" onclick="sw(6)">Warning Signs</button>
+      <button class="t-tab" onclick="sw(7)">Sample</button>
+      <button class="t-tab" onclick="sw(8)">Next Steps</button>
+      <button class="t-tab" onclick="sw(9)">Media</button>
+      <button class="t-tab" onclick="sw(10)">Long Text</button>
+    </div>
+    <div class="t-panels">
+      <div class="t-panel active" data-p="0">
+        <h2 class="t-sec-title">Philosophy</h2>
+        <p class="t-sec-body">Most of the buying process happens in the time between meetings. A strong meeting can create clarity and momentum, but that momentum will fade if it is not reinforced. The buyer leaves the conversation and has to interpret what was discussed, align stakeholders, and determine what to do next. DEAL exists to support that part of the process. It is a structured way to: Preserve alignment from the meeting, Clarify responsibilities on both sides, Guide the buyer through their decision process. When used well, DEAL becomes a shared working document that evolves with the opportunity. It helps the buyer move forward with clarity and confidence, while giving you visibility into whether the opportunity is progressing. This is a core part of enabling buying.</p>
+        <div class="t-grid">
+          <div class="t-card">
+            <h3>Open the DEAL Generator</h3>
+            <p><a href="https://app.collavia.com/app/deal-generator" target="_blank" rel="noopener" style="color:#5496E9;">Open the DEAL Generator</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="t-panel" data-p="1">
+        <h2 class="t-sec-title">What Is a DEAL Document?</h2>
+        <p class="t-sec-body">A DEAL document is a structured follow-up that captures: What matters to the buyer, What needs to happen next, Who is responsible for each step, What success looks like. It is designed to maintain alignment and create forward movement between conversations.</p>
+        <div class="t-raw-content">
+          <p>A DEAL document is a structured follow-up that captures:</p>
+          <ul>
+            <li>What matters to the buyer</li>
+            <li>What needs to happen next</li>
+            <li>Who is responsible for each step</li>
+            <li>What success looks like</li>
+          </ul>
+          <p>It is designed to maintain alignment and create forward movement between conversations.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="2">
+        <h2 class="t-sec-title">When to Use DEAL</h2>
+        <p class="t-sec-body">Use DEAL after any meaningful sales conversation where: A problem or opportunity has been identified, There is interest in continuing the conversation, Next steps are required to move forward. Your first DEAL should typically follow the first strong meeting. A proposal should not be created until there is strong alignment within the DEAL document.</p>
+        <div class="t-raw-content">
+          <p>Use DEAL after any meaningful sales conversation where:</p>
+          <ul>
+            <li>A problem or opportunity has been identified</li>
+            <li>There is interest in continuing the conversation</li>
+            <li>Next steps are required to move forward</li>
+          </ul>
+          <p>Your first DEAL should typically follow the first strong meeting.</p>
+          <p>From there, the document should be updated and refined after key interactions. It should evolve as:</p>
+          <ul>
+            <li>The problem becomes clearer</li>
+            <li>Additional stakeholders are involved</li>
+            <li>The path forward takes shape</li>
+          </ul>
+          <p>A proposal should not be created until there is strong alignment within the DEAL document.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="3">
+        <h2 class="t-sec-title">Mechanics</h2>
+        <p class="t-sec-body">A DEAL document has four components: D – Determine Requirements, E – Engage the Prospect, A – Assume Responsibility, L – List Desired Outcomes. Each section should be clearly labeled and use numbered bullets. This format is critical. A buyer can reference specific points such as "D2" or "A3," which makes communication faster and more precise.</p>
+        <div class="t-raw-content">
+          <p>A DEAL document has four components:</p>
+          <ul>
+            <li>D – Determine Requirements</li>
+            <li>E – Engage the Prospect</li>
+            <li>A – Assume Responsibility</li>
+            <li>L – List Desired Outcomes</li>
+          </ul>
+          <p>Each section should be clearly labeled and use numbered bullets.</p>
+          <p>This format is critical.</p>
+          <p>Numbered bullets make the document easy to scan and easy to respond to. A buyer can reference specific points such as "D2" or "A3," which makes communication faster and more precise.</p>
+          <p>This structure drives engagement as much as the content itself.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="4">
+        <h2 class="t-sec-title">Using DEAL to Drive Momentum</h2>
+        <p class="t-sec-body">DEAL is not a one-time document. It is iterative. Each version should reflect the current state of the opportunity, incorporate feedback from the buyer, and clarify what has changed. Prioritize the opportunities where the buyer is actively engaging. These are far more likely to move forward.</p>
+        <div class="t-raw-content">
+          <p>DEAL is not a one-time document. It is iterative.</p>
+          <p>Each version should:</p>
+          <ul>
+            <li>Reflect the current state of the opportunity</li>
+            <li>Incorporate feedback from the buyer</li>
+            <li>Clarify what has changed and what remains</li>
+          </ul>
+          <p>This process helps you:</p>
+          <ul>
+            <li>Build alignment over time</li>
+            <li>Surface misunderstandings early</li>
+            <li>Guide the buyer through their decision process</li>
+          </ul>
+          <p>One of the most important signals to watch is engagement.</p>
+          <ul>
+            <li>Some prospects respond quickly, provide feedback, and engage with the content</li>
+            <li>Others do not respond or provide minimal input</li>
+          </ul>
+          <p>This is a strong buying signal. Prioritize the opportunities where the buyer is actively engaging.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="5">
+        <h2 class="t-sec-title">DEAL as a Qualification and Management Tool</h2>
+        <p class="t-sec-body">DEAL is not just a communication tool. It is also a way to evaluate opportunity quality. Strong opportunities show clear requirements, active engagement, defined responsibilities, and consistent forward movement.</p>
+        <div class="t-raw-content">
+          <p>Strong opportunities typically show:</p>
+          <ul>
+            <li>Clear and accurate requirements</li>
+            <li>Active engagement from the buyer</li>
+            <li>Defined responsibilities on both sides</li>
+            <li>Consistent forward movement</li>
+          </ul>
+          <p>Weaker opportunities often show:</p>
+          <ul>
+            <li>Vague or incomplete requirements</li>
+            <li>Little or no engagement with the DEAL document</li>
+            <li>Unclear next steps</li>
+            <li>Inconsistent follow-through</li>
+          </ul>
+          <p>From a management perspective, DEAL can also serve as a valuable KPI:</p>
+          <ul>
+            <li>Number of DEAL documents created</li>
+            <li>Quality and completeness of each section</li>
+            <li>Level of buyer engagement and response</li>
+          </ul>
+          <p>These indicators provide insight into pipeline health and sales effectiveness.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="6">
+        <h2 class="t-sec-title">Warning Signs</h2>
+        <p class="t-sec-body">Be cautious if you see no response to a DEAL document, minimal or vague feedback, lack of ownership in the Engage the Prospect section, or repeated delays and unclear next steps.</p>
+        <div class="t-raw-content">
+          <ul>
+            <li>No response to a DEAL document</li>
+            <li>Minimal or vague feedback</li>
+            <li>Lack of ownership in the "Engage the Prospect" section</li>
+            <li>Repeated delays or unclear next steps</li>
+          </ul>
+          <p>These often indicate a lack of alignment or a weak opportunity.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="7">
+        <h2 class="t-sec-title">Sample DEAL Document</h2>
+        <p class="t-sec-body">Below is a simplified example showing how a DEAL document may evolve over time.</p>
+        <div class="t-raw-content">
+          <h3>DEAL 1 (After Initial Meeting)</h3>
+          <p><strong>A. Your Requirements</strong></p>
+          <ol>
+            <li>You are currently onboarding new clients in an inconsistent and largely manual way, with timelines ranging from 45 to 75 days</li>
+            <li>Delays are most often occurring between contract signature and project kickoff</li>
+            <li>This is creating a negative first impression for new clients</li>
+            <li>Your leadership team has identified onboarding as a priority area for improvement this year</li>
+            <li>There is currently limited visibility into where clients are in the onboarding process</li>
+            <li>You are looking for a more structured and scalable onboarding approach</li>
+          </ol>
+          <p><strong>B. Your Next Steps</strong></p>
+          <ol>
+            <li>Review and confirm that the requirements outlined above accurately reflect your current situation</li>
+            <li>Identify additional stakeholders from operations and client success</li>
+            <li>Schedule a follow-up meeting with those stakeholders</li>
+          </ol>
+          <p><strong>C. Our Next Steps</strong></p>
+          <ol>
+            <li>Prepare examples of how similar organizations have improved onboarding timelines</li>
+            <li>Identify initial areas where process structure could reduce delays</li>
+            <li>Bring a subject matter expert to the next meeting</li>
+          </ol>
+          <p><strong>D. Desired Outcomes</strong></p>
+          <ol>
+            <li>Agreement that the onboarding process is a priority area to address</li>
+            <li>Alignment on the core challenges contributing to delays</li>
+            <li>Confirmation of next steps and stakeholder involvement</li>
+          </ol>
+          <h3>DEAL 2 (After Feedback and Second Meeting)</h3>
+          <p><strong>A. Your Requirements</strong></p>
+          <ol>
+            <li>Confirmed that onboarding timelines are averaging approximately 65 days, with a goal to reduce to 30 days or less</li>
+            <li>Inconsistency across teams is a primary driver of delays</li>
+            <li>Lack of defined ownership during key stages is contributing to missed handoffs</li>
+            <li>Limited visibility into onboarding progress is preventing proactive management</li>
+            <li>Operations and client success leaders are aligned on the impact of improving onboarding</li>
+          </ol>
+          <p><strong>B. Your Next Steps</strong></p>
+          <ol>
+            <li>Provide access to current onboarding workflow documentation</li>
+            <li>Confirm availability of operations and client success leads for a working session</li>
+            <li>Share any existing metrics or KPIs used to track onboarding performance</li>
+          </ol>
+          <p><strong>C. Our Next Steps</strong></p>
+          <ol>
+            <li>Review onboarding workflow and identify key inefficiencies</li>
+            <li>Develop a high-level improvement approach focused on speed, consistency, and visibility</li>
+            <li>Share relevant case examples with quantified results</li>
+          </ol>
+          <p><strong>D. Desired Outcomes</strong></p>
+          <ol>
+            <li>Alignment on the root causes of onboarding delays</li>
+            <li>Agreement on priority areas for improvement</li>
+            <li>Initial alignment on the direction of a potential solution</li>
+          </ol>
+        </div>
+      </div>
+      <div class="t-panel" data-p="8">
+        <h2 class="t-sec-title">Next Step</h2>
+        <p class="t-sec-body">Use the DEAL Generator to quickly create your first version, then refine and update your DEAL document as the opportunity develops.</p>
+        <div class="t-raw-content">
+          <p>Use the DEAL Generator to quickly create your first version:</p>
+          <p><a href="https://app.collavia.com/app/deal-generator" target="_blank" style="color:#5496E9;">Open the DEAL Generator</a></p>
+          <p>Then refine and update your DEAL document as the opportunity develops.</p>
+        </div>
+      </div>
+      <div class="t-panel" data-p="9">
+        <h2 class="t-sec-title">Media</h2>
+        <div class="t-media-grid">
+          <div class="t-media-item">
+            <iframe class="sproutvideo-player" src="//videos.sproutvideo.com/embed/7c9adab7121cedc3f4/41427fca67db19c7" width="630px" height="354px" frameborder="0" allowfullscreen=""></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="t-panel" data-p="10">
+        <h2 class="t-sec-title">Long Text</h2>
+        <div class="t-longtext" id="collavia-longtext">
+          <div class="t-ls">
+            <div class="t-ls-heading">Philosophy</div>
+            <div class="t-ls-body">
+              <p>Most of the buying process happens in the time between meetings.</p>
+              <p>A strong meeting can create clarity and momentum, but that momentum will fade if it is not reinforced.</p>
+              <ul>
+                <li>Preserve alignment from the meeting</li>
+                <li>Clarify responsibilities on both sides</li>
+                <li>Guide the buyer through their decision process</li>
+              </ul>
+              <p>When used well, DEAL becomes a shared working document that evolves with the opportunity.</p>
+              <p><a href="https://app.collavia.com/app/deal-generator" target="_blank" rel="noopener" style="color:#5496E9;">Open the DEAL Generator</a></p>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">What Is a DEAL Document?</div>
+            <div class="t-ls-body">
+              <ul>
+                <li>What matters to the buyer</li>
+                <li>What needs to happen next</li>
+                <li>Who is responsible for each step</li>
+                <li>What success looks like</li>
+              </ul>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">When to Use DEAL</div>
+            <div class="t-ls-body">
+              <ul>
+                <li>A problem or opportunity has been identified</li>
+                <li>There is interest in continuing the conversation</li>
+                <li>Next steps are required to move forward</li>
+              </ul>
+              <p>A proposal should not be created until there is strong alignment within the DEAL document.</p>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Mechanics</div>
+            <div class="t-ls-body">
+              <ul>
+                <li>D – Determine Requirements</li>
+                <li>E – Engage the Prospect</li>
+                <li>A – Assume Responsibility</li>
+                <li>L – List Desired Outcomes</li>
+              </ul>
+              <p>Each section should be clearly labeled and use numbered bullets. A buyer can reference specific points such as "D2" or "A3."</p>
+              <h3>D – Determine Requirements</h3>
+              <p>Captures what matters most to the buyer. Use their exact language, include specific numbers or metrics.</p>
+              <h3>E – Engage the Prospect</h3>
+              <p>Defines what the buyer needs to do to move the opportunity forward.</p>
+              <h3>A – Assume Responsibility</h3>
+              <p>Outlines what you will do to support the buyer. Demonstrates structure, credibility, and commitment.</p>
+              <h3>L – List Desired Outcomes</h3>
+              <p>Defines what success looks like at this stage of the opportunity.</p>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Using DEAL to Drive Momentum</div>
+            <div class="t-ls-body">
+              <p>DEAL is not a one-time document. It is iterative.</p>
+              <ul>
+                <li>Reflect the current state of the opportunity</li>
+                <li>Incorporate feedback from the buyer</li>
+                <li>Clarify what has changed and what remains</li>
+              </ul>
+              <p>Prioritize the opportunities where the buyer is actively engaging.</p>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">DEAL as a Qualification and Management Tool</div>
+            <div class="t-ls-body">
+              <p>Strong opportunities typically show:</p>
+              <ul>
+                <li>Clear and accurate requirements</li>
+                <li>Active engagement from the buyer</li>
+                <li>Defined responsibilities on both sides</li>
+                <li>Consistent forward movement</li>
+              </ul>
+              <p>Weaker opportunities often show:</p>
+              <ul>
+                <li>Vague or incomplete requirements</li>
+                <li>Little or no engagement with the DEAL document</li>
+                <li>Unclear next steps</li>
+                <li>Inconsistent follow-through</li>
+              </ul>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Warning Signs</div>
+            <div class="t-ls-body">
+              <ul>
+                <li>No response to a DEAL document</li>
+                <li>Minimal or vague feedback</li>
+                <li>Lack of ownership in the "Engage the Prospect" section</li>
+                <li>Repeated delays or unclear next steps</li>
+              </ul>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Sample DEAL Document</div>
+            <div class="t-ls-body">
+              <h3>DEAL 1 (After Initial Meeting)</h3>
+              <p><strong>A. Your Requirements</strong></p>
+              <ol>
+                <li>You are currently onboarding new clients in an inconsistent and largely manual way, with timelines ranging from 45 to 75 days</li>
+                <li>Delays are most often occurring between contract signature and project kickoff</li>
+                <li>This is creating a negative first impression for new clients</li>
+                <li>Your leadership team has identified onboarding as a priority area for improvement this year</li>
+                <li>There is currently limited visibility into where clients are in the onboarding process</li>
+                <li>You are looking for a more structured and scalable onboarding approach</li>
+              </ol>
+              <p><strong>B. Your Next Steps</strong></p>
+              <ol>
+                <li>Review and confirm that the requirements outlined above accurately reflect your current situation</li>
+                <li>Identify additional stakeholders from operations and client success</li>
+                <li>Schedule a follow-up meeting with those stakeholders</li>
+              </ol>
+              <p><strong>C. Our Next Steps</strong></p>
+              <ol>
+                <li>Prepare examples of how similar organizations have improved onboarding timelines</li>
+                <li>Identify initial areas where process structure could reduce delays</li>
+                <li>Bring a subject matter expert to the next meeting</li>
+              </ol>
+              <p><strong>D. Desired Outcomes</strong></p>
+              <ol>
+                <li>Agreement that the onboarding process is a priority area to address</li>
+                <li>Alignment on the core challenges contributing to delays</li>
+                <li>Confirmation of next steps and stakeholder involvement</li>
+              </ol>
+              <h3>DEAL 2 (After Feedback and Second Meeting)</h3>
+              <p><strong>A. Your Requirements</strong></p>
+              <ol>
+                <li>Confirmed that onboarding timelines are averaging approximately 65 days, with a goal to reduce to 30 days or less</li>
+                <li>Inconsistency across teams is a primary driver of delays</li>
+                <li>Lack of defined ownership during key stages is contributing to missed handoffs</li>
+                <li>Limited visibility into onboarding progress is preventing proactive management</li>
+                <li>Operations and client success leaders are aligned on the impact of improving onboarding</li>
+              </ol>
+              <p><strong>B. Your Next Steps</strong></p>
+              <ol>
+                <li>Provide access to current onboarding workflow documentation</li>
+                <li>Confirm availability of operations and client success leads for a working session</li>
+                <li>Share any existing metrics or KPIs used to track onboarding performance</li>
+              </ol>
+              <p><strong>C. Our Next Steps</strong></p>
+              <ol>
+                <li>Review onboarding workflow and identify key inefficiencies</li>
+                <li>Develop a high-level improvement approach focused on speed, consistency, and visibility</li>
+                <li>Share relevant case examples with quantified results</li>
+              </ol>
+              <p><strong>D. Desired Outcomes</strong></p>
+              <ol>
+                <li>Alignment on the root causes of onboarding delays</li>
+                <li>Agreement on priority areas for improvement</li>
+                <li>Initial alignment on the direction of a potential solution</li>
+              </ol>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Simple Version</div>
+            <div class="t-ls-body">
+              <ul>
+                <li>DEAL maintains alignment between meetings</li>
+                <li>It defines what matters, what happens next, and who is responsible</li>
+                <li>Strong DEAL usage creates momentum and supports better decisions</li>
+                <li>Buyer engagement with the DEAL document is a strong signal of opportunity quality</li>
+              </ul>
+            </div>
+          </div>
+          <div class="t-ls">
+            <div class="t-ls-heading">Next Step</div>
+            <div class="t-ls-body">
+              <p>Use the DEAL Generator to quickly create your first version:</p>
+              <p><a href="https://app.collavia.com/app/deal-generator" target="_blank" rel="noopener" style="color:#5496E9;">Open the DEAL Generator</a></p>
+              <p>Then refine and update your DEAL document as the opportunity develops.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sw(i) {
+      document.querySelectorAll('.t-tab').forEach((b, j) => b.classList.toggle('active', j === i));
+      document.querySelectorAll('.t-panel').forEach(p => p.classList.toggle('active', +p.dataset.p === i));
+    }
+  </script>
+
+</body>
+</html>
